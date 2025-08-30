@@ -50,36 +50,7 @@ async function analyzePainPoints(posts, userQuery) {
     const titlesForAnalysis = posts.map(p => `ID: ${p.id} :: TITOLO: ${p.title}`).join('\n');
     
     const prompt = `
-        ### COMPITO
-        Sei un analista di mercato. Analizza i titoli di post forniti per identificare "pain points" specifici e ricorrenti relativi al CONTESTO UTENTE.
-
-        ### CONTESTO UTENTE
-        "${userQuery}"
-
-        ### REGOLE FONDAMENTALI
-        0.  **DEVONO ESSERE PAIN POINT" Devono essere problemi reali riscontrati dagli utenti.
-        1.  **SII SPECIFICO:** Non creare categorie generiche. Crea categorie specifiche e granulari.
-        3.  **IGNORA IL RUMORE:** Scarta i titoli che sono meme, notizie, domande generiche, storie positive...
-        4.  **TITOLI CONCISI:** I titoli dei pain point devono avere massimo 8 parole.
-        5.  **LIMITE:** Genera al massimo 50 pain points!!!
-
-        ### FORMATO DI OUTPUT OBBLIGATORIO
-        Rispondi ESCLUSIVAMENTE con un array JSON valido e completo.
-
-        ### ESEMPIO DI OUTPUT JSON PERFETTO
-        [
-          {
-            "painPointTitle": "Difficoltà a trovare alloggio",
-            "postIds": ["t3_abcde", "t3_fghij", ...]
-          },
-          {
-            "painPointTitle": "Costo eccessivo dei libri di testo",
-            "postIds": ["t3_lmnop", ...]
-          }
-        ]
-
-        ### TITOLI DA ANALIZZARE
-        ${titlesForAnalysis}
+        
         Sei un analista di mercato. Analizza i titoli di post (e opzionalmente i body) forniti per identificare "pain points" specifici e ricorrenti relativi al CONTESTO UTENTE.
 
 INPUT ATTESO:
@@ -126,7 +97,7 @@ INPUT:
 }
 OUTPUT:
 [
-  { "painPointTitle":"Verifica SMS non ricevuta", "postIds":["t3_a1","t3_a2"] }
+  { "painPointTitle":"Problema con messaggistica SMS", "postIds":["t3_a1","t3_a2"] }
 ]
 INPUT:
 {
@@ -139,7 +110,7 @@ INPUT:
 }
 OUTPUT:
 [
-  { "painPointTitle":"Portale studenti Pisa non accessibile", "postIds":["t3_c1","t3_c2","t3_c3"] }
+  { "painPointTitle":"Problema con portale studenti di Pisa", "postIds":["t3_c1","t3_c2","t3_c3"] }
 ]
 INPUT:
 {
