@@ -55,7 +55,7 @@ async function fetchPostsFromSubreddits(subredditList, topic) { // Ho ri-aggiunt
 
     console.log(`Eseguo una ricerca AUTENTICATA per "${topic}" nei subreddit suggeriti...`);
 
-    const limit = 40;
+    const limit = 100;
     const fourMonthsAgo = Math.floor((new Date().setMonth(new Date().getMonth() - 4)) / 1000);
     
     // --- MODIFICA 2: Usiamo la ricerca potente invece di /new.json ---
