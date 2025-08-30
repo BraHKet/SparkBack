@@ -26,22 +26,24 @@ async function fetchPostsFromSubreddits(subredditList) {
 
     const responses = await Promise.allSettled(fetchPromises);
 
-    responses.forEach(result => {
-        if (result.status === 'fulfilled' && result.value.data && result.value.data.data) {
-            const posts = result.value.data.data.children;
-            const relevantPosts = posts
-                .filter(post => post.data.created_utc >= fourMonthsAgo && post.data.title)
-                .map(post => ({
-                    id: post.data.id,
-                    title: post.data.title,
-                    text: post.data.selftext || '',
-                    url: `https://www.reddit.com${post.data.permalink}`,
-                    upvotes: post.data.ups,
-                    comments_count: post.data.num_comments,
-                }));
-            allPosts.push(...relevantPosts);
+    console.log("--- INIZIO ANALISI RISPOSTE DA REDDIT ---");
+    responses.forEach((result, index) => {
+        // Prendiamo il nome del subreddit per avere contesto
+        const subredditName = subredditList[index]; 
+        console.log(`Risultato per r/${subredditName}:`);
+
+        if (result.status === 'fulfilled') {
+            // La richiesta ha avuto successo, ma cosa c'è dentro?
+            const postCount = result.value.data?.data?.children?.length || 0;
+            console.log(` -> Stato: Successo. Post trovati: ${postCount}`);
+        } else { // result.status === 'rejected'
+            // La richiesta è FALLITA! Questa è la prova che cerchiamo.
+            console.log(` -> Stato: FALLITO.`);
+            // Stampiamo il motivo esatto del fallimento
+            console.error(` -> Motivo del fallimento per r/${subredditName}:`, result.reason.message);
         }
     });
+    console.log("--- FINE ANALISI RISPOSTE DA REDDIT ---");
 
     // Rimuoviamo eventuali duplicati
     const uniquePosts = Array.from(new Map(allPosts.map(post => [post.id, post])).values());
