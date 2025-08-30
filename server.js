@@ -23,7 +23,7 @@ app.post('/api/brainstorm', async (req, res) => {
         }
 
         // PASSO 2: Raccogli i post da questi subreddit di alta qualità (chiamate a Reddit)
-        const allPosts = await fetchPostsFromSubreddits(subredditList);
+        const allPosts = await fetchPostsFromSubreddits(subredditList, topic);
         if (allPosts.length === 0) {
             console.log("Nessun post trovato nei subreddit suggeriti.");
             return res.json([]);
